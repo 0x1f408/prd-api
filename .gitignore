@@ -1,0 +1,10 @@
+# Editor files
+*.iml
+.idea
+
+# Generated output files
+out
+target
+
+# Temp
+REQUIREMENTS.md

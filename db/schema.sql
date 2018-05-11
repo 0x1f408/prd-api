@@ -1,0 +1,37 @@
+-- Kill it with fire
+DROP DATABASE `prd`;
+CREATE DATABASE `prd`;
+
+-- Make sure we're using our shiny new DB
+USE `prd`;
+
+-- Initialization
+SET FOREIGN_KEY_CHECKS=0;
+SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT;
+SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS;
+SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION;
+SET NAMES utf8;
+SET @OLD_TIME_ZONE=@@TIME_ZONE;
+SET TIME_ZONE='-5:00';
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
+SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0;
+
+-- Comments on proposals
+-- Will reference a specific id & version
+-- Index this by id & version
+DROP TABLE IF EXISTS `prd_proposal_comments`;
+CREATE TABLE IF NOT EXISTS `prd_proposal_comments`(
+  `comment_id` INTEGER(10) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  `comment_on_proposal` VARCHAR(32) NOT NULL,
+  `comment_on_version` INTEGER(10) UNSIGNED NOT NULL,
+  `comment_author` VARCHAR(64) NOT NULL,
+  `comment_body` VARCHAR(2048) DEFAULT NULL
+
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+CREATE INDEX `idx_proposal_version` USING BTREE ON `prd_proposal_comments`(`comment_on_proposal`,`comment_on_version`);
+
+-- Wrap-up
+SET FOREIGN_KEY_CHECKS=1;
+SHOW ENGINE INNODB STATUS;
