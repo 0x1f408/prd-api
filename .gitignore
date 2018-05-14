@@ -5,3 +5,6 @@
 # Generated output files
 out
 target
+
+# No
+src/main/java/daos/mysql/MySQLConnectionPool.java

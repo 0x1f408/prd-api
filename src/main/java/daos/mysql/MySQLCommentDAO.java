@@ -22,7 +22,7 @@ public class MySQLCommentDAO extends CommentDAO {
     public boolean submitNewComment(Comment comment) throws SQLException {
         // Establish our connection and build our query
         Connection con = MY_SQL_CONNECTION_POOL.getConnection();
-        String query = "INSERT INTO `prd`.`prd_proposal_comments` (" +
+        String query = "INSERT INTO `prd`.`6TH_proposal_comments` (" +
                 "`comment_on_proposal`," +
                 "`comment_on_version`," +
                 "`comment_author`," +
@@ -48,7 +48,7 @@ public class MySQLCommentDAO extends CommentDAO {
         List<Comment> comments = new ArrayList<>();
         Connection con = MY_SQL_CONNECTION_POOL.getConnection();
         String query = "SELECT * FROM (" +
-                "SELECT * FROM `prd`.`prd_proposal_comments` WHERE `comment_on_proposal` = ?) pvc " +
+                "SELECT * FROM `prd`.`6TH_proposal_comments` WHERE `comment_on_proposal` = ?) pvc " +
                 "WHERE pvc.`comment_on_version` = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setString(1,proposalId);
@@ -79,7 +79,7 @@ public class MySQLCommentDAO extends CommentDAO {
     public List<Comment> getCommentsOnProposal(String proposalId) throws SQLException{
         List<Comment> comments = new ArrayList<>();
         Connection con = MY_SQL_CONNECTION_POOL.getConnection();
-        String query = "SELECT * FROM `prd`.`prd_proposal_comments` WHERE `comment_on_proposal` = ?";
+        String query = "SELECT * FROM `prd`.`6TH_proposal_comments` WHERE `comment_on_proposal` = ?";
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setString(1,proposalId);

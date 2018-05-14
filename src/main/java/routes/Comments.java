@@ -8,17 +8,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import daos.mysql.MySQLCommentDAO;
 import models.Comment;
 
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Make error messages more consistent
-@Path("/*")
+// TODO: Make error messages more consistent, and make them provide more useful information
+@Path("/comment/")
 public class Comments {
     private static final MySQLCommentDAO MY_SQL_COMMENT_DAO = new MySQLCommentDAO();
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response testConf(){
+        ObjectMapper om = new ObjectMapper();
+        Comment comment = new Comment();
+        try {
+            return Response.status(Response.Status.OK).entity(om.writeValueAsString(comment)).build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.OK).entity("Something went wrong with the mapper").build();
+        }
+
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -26,9 +42,11 @@ public class Comments {
     public Response getCommentsOnProposal(@PathParam("proposalId") String proposalId){
         ObjectMapper om = new ObjectMapper();
 
+        List<Comment> comments = new ArrayList<>();
+
         try {
             // Build this from the controller
-            List<Comment> comments = MY_SQL_COMMENT_DAO.getCommentsOnProposal(proposalId);
+            comments = MY_SQL_COMMENT_DAO.getCommentsOnProposal(proposalId);
             return Response.status(Response.Status.OK).entity(om.writeValueAsString(comments)).build();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -47,8 +65,9 @@ public class Comments {
     public Response getCommentsOnVersion(@PathParam("proposalId") String proposalId, @PathParam("proposalVersion") int proposalVersion){
         ObjectMapper om = new ObjectMapper();
 
+        List<Comment> comments = new ArrayList<>();
         try {
-            List<Comment> comments = MY_SQL_COMMENT_DAO.getCommentsOnVersion(proposalId,proposalVersion);
+            comments = MY_SQL_COMMENT_DAO.getCommentsOnVersion(proposalId,proposalVersion);
             return Response.status(Response.Status.OK).entity(om.writeValueAsString(comments)).build();
 
         } catch (SQLException e) {
@@ -63,7 +82,6 @@ public class Comments {
 
     }
 
-    // Todo: make the error responses produce more useful information
     // e.g.: output expected JSON structure and/or received vs expected response
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -92,4 +110,5 @@ public class Comments {
         }
 
     }
+
 }

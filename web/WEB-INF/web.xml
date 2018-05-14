@@ -4,24 +4,18 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <display-name>Proposal Comments API</display-name>
     <servlet>
-        <servlet-name>Comments</servlet-name>
+        <servlet-name>Routes</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <!-- todo: fix param-value here (points to wrong package) -->
             <param-name>com.sun.jersey.config.property.packages</param-name>
             <param-value>routes</param-value>
         </init-param>
-        <init-param>
-            <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>com.jersey.jaxb,
-                com.fasterxml.jackson.jaxrs.json</param-value>
-        </init-param>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>Comments</servlet-name>
-        <url-pattern>/comment/*</url-pattern>
+        <servlet-name>Routes</servlet-name>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
 </web-app>

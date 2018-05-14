@@ -21,8 +21,8 @@ SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0;
 -- Comments on proposals
 -- Will reference a specific id & version
 -- Index this by id & version
-DROP TABLE IF EXISTS `prd_proposal_comments`;
-CREATE TABLE IF NOT EXISTS `prd_proposal_comments`(
+DROP TABLE IF EXISTS `6TH_proposal_comments`;
+CREATE TABLE IF NOT EXISTS `6TH_proposal_comments`(
   `comment_id` INTEGER(10) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   `comment_on_proposal` VARCHAR(32) NOT NULL,
   `comment_on_version` INTEGER(10) UNSIGNED NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `prd_proposal_comments`(
   `comment_body` VARCHAR(2048) DEFAULT NULL
 
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
-CREATE INDEX `idx_proposal_version` USING BTREE ON `prd_proposal_comments`(`comment_on_proposal`,`comment_on_version`);
+CREATE INDEX `idx_proposal_version` USING BTREE ON `6TH_proposal_comments`(`comment_on_proposal`,`comment_on_version`);
 
 -- Wrap-up
 SET FOREIGN_KEY_CHECKS=1;
