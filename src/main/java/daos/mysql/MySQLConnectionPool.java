@@ -9,12 +9,12 @@ import java.sql.SQLException;
 public class MySQLConnectionPool {
     // TODO: ensure we're not re-committing this after initial
     // Do NOT push passwords to a public repository
-    private final String PROTOCOL = "";
-    private final String DBURI = "";
-    private final String PORT = "";
-    private final String DBNAME = "";
-    private final String DBUSERNAME = "";
-    private final String DBPASSWORD = "";
+    private final String PROTOCOL = "jdbc:mysql://";
+    private final String DBURI = "db.example.com";
+    private final String PORT = ":3306";
+    private final String DBNAME = "/exampleDB";
+    private final String DBUSERNAME = "user";
+    private final String DBPASSWORD = "pass";
 
     // Use MySQL Connector/J driver
     // We probably don't need this, but leaving it here just in case

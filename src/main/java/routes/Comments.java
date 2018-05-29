@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import daos.mysql.MySQLCommentDAO;
 import models.Comment;
 
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -21,6 +20,8 @@ import java.util.List;
 @Path("/comment/")
 public class Comments {
     private static final MySQLCommentDAO MY_SQL_COMMENT_DAO = new MySQLCommentDAO();
+
+    // Auth: https://stackoverflow.com/questions/6774506/jersey-client-api-authentication
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,7 +39,7 @@ public class Comments {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{proposalId}")
+    @Path("/find/{proposalId}")
     public Response getCommentsOnProposal(@PathParam("proposalId") String proposalId){
         ObjectMapper om = new ObjectMapper();
 
@@ -61,7 +62,7 @@ public class Comments {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{proposalId}/{proposalVersion}")
+    @Path("/find/{proposalId}/{proposalVersion}")
     public Response getCommentsOnVersion(@PathParam("proposalId") String proposalId, @PathParam("proposalVersion") int proposalVersion){
         ObjectMapper om = new ObjectMapper();
 

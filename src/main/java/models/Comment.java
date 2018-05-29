@@ -1,49 +1,56 @@
 package models;
 
 public class Comment {
-    private int id, proposalVersion;
-    private String proposalId;
-    private String text, author;
+    private int comment_id, comment_on_version;
+    private String comment_on_proposal, comment_on_segment;
+    private String comment_body, comment_author;
 
     public Comment(){}
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCommentId(int comment_id) {
+        this.comment_id = comment_id;
     }
 
-    public int getId() {
-        return id;
+    public int getCommentId() {
+        return comment_id;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getCommentAuthor() {
+        return comment_author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setCommentAuthor(String comment_author) {
+        this.comment_author = comment_author;
     }
 
-    public int getProposalVersion() {
-        return proposalVersion;
+    public String getCommentOnSegment() {
+        return comment_on_segment;
     }
 
-    public String getProposalId() {
-        return proposalId;
+    public void setCommentOnSegment(String comment_on_segment){
+        this.comment_on_segment = comment_on_segment;
+    }
+    public int getCommentOnVersion() {
+        return comment_on_version;
     }
 
-    public String getText() {
-        return text;
+    public String getCommentOnProposal() {
+        return comment_on_proposal;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public String getCommentBody() {
+        return comment_body;
     }
 
-    public void setProposalId(String proposalId) {
-        this.proposalId = proposalId;
+    public void setCommentBody(String comment_body) {
+        this.comment_body = comment_body;
     }
 
-    public void setProposalVersion(int proposalVersion) {
-        this.proposalVersion = proposalVersion;
+    public void setCommentOnProposal(String comment_on_proposal) {
+        this.comment_on_proposal = comment_on_proposal;
+    }
+
+    public void setCommentOnVersion(int comment_on_version) {
+        this.comment_on_version = comment_on_version;
     }
 }

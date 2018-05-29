@@ -22,17 +22,19 @@ public class MySQLCommentDAO extends CommentDAO {
     public boolean submitNewComment(Comment comment) throws SQLException {
         // Establish our connection and build our query
         Connection con = MY_SQL_CONNECTION_POOL.getConnection();
-        String query = "INSERT INTO `prd`.`6TH_proposal_comments` (" +
+        String query = "INSERT INTO `prd`.`SIXTH_proposal_comments` (" +
                 "`comment_on_proposal`," +
                 "`comment_on_version`," +
+                "`comment_on_segment`," +
                 "`comment_author`," +
                 "`comment_body`) VALUES (" +
-                "?,?,?,?);";
+                "?,?,?,?,?);";
         PreparedStatement ps = con.prepareStatement(query);
-        ps.setString(1, comment.getProposalId());
-        ps.setInt(2,comment.getProposalVersion());
-        ps.setString(3,comment.getAuthor());
-        ps.setString(4,comment.getText());
+        ps.setString(1, comment.getCommentOnProposal());
+        ps.setInt(2,comment.getCommentOnVersion());
+        ps.setString(3, comment.getCommentOnSegment());
+        ps.setString(4,comment.getCommentAuthor());
+        ps.setString(5,comment.getCommentBody());
 
         // Do the thing
         int rowsAffected = ps.executeUpdate();
@@ -48,7 +50,7 @@ public class MySQLCommentDAO extends CommentDAO {
         List<Comment> comments = new ArrayList<>();
         Connection con = MY_SQL_CONNECTION_POOL.getConnection();
         String query = "SELECT * FROM (" +
-                "SELECT * FROM `prd`.`6TH_proposal_comments` WHERE `comment_on_proposal` = ?) pvc " +
+                "SELECT * FROM `prd`.`SIXTH_proposal_comments` WHERE `comment_on_proposal` = ?) pvc " +
                 "WHERE pvc.`comment_on_version` = ?";
         PreparedStatement ps = con.prepareStatement(query);
         ps.setString(1,proposalId);
@@ -60,26 +62,27 @@ public class MySQLCommentDAO extends CommentDAO {
         while (rs.next()){
             // Create and build out a temporary Comment
             Comment c = new Comment();
-            c.setProposalId(rs.getString("comment_on_proposal"));
-            c.setProposalVersion(rs.getInt("comment_on_version"));
-            c.setText(rs.getString("comment_body"));
-            c.setAuthor(rs.getString("comment_author"));
+            c.setCommentOnProposal(rs.getString("comment_on_proposal"));
+            c.setCommentOnVersion(rs.getInt("comment_on_version"));
+            c.setCommentOnSegment(rs.getString("comment_on_segment"));
+            c.setCommentBody(rs.getString("comment_body"));
+            c.setCommentAuthor(rs.getString("comment_author"));
 
             // Add the new Comment to our list
             comments.add(c);
         }
 
         // Close our connections
+        rs.close();
         ps.close();
         con.close();
-        rs.close();
         return comments;
     }
 
     public List<Comment> getCommentsOnProposal(String proposalId) throws SQLException{
         List<Comment> comments = new ArrayList<>();
         Connection con = MY_SQL_CONNECTION_POOL.getConnection();
-        String query = "SELECT * FROM `prd`.`6TH_proposal_comments` WHERE `comment_on_proposal` = ?";
+        String query = "SELECT * FROM `prd`.`SIXTH_proposal_comments` WHERE `comment_on_proposal` = ?";
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setString(1,proposalId);
@@ -89,19 +92,21 @@ public class MySQLCommentDAO extends CommentDAO {
         while (rs.next()){
             // Create and build out a temporary Comment
             Comment c = new Comment();
-            c.setProposalId(rs.getString("comment_on_proposal"));
-            c.setProposalVersion(rs.getInt("comment_on_version"));
-            c.setText(rs.getString("comment_body"));
-            c.setAuthor(rs.getString("comment_author"));
+            c.setCommentOnProposal(rs.getString("comment_on_proposal"));
+            c.setCommentOnVersion(rs.getInt("comment_on_version"));
+            c.setCommentOnSegment(rs.getString("comment_on_segment"));
+            c.setCommentBody(rs.getString("comment_body"));
+            c.setCommentAuthor(rs.getString("comment_author"));
 
             // Add the new Comment to our list
             comments.add(c);
         }
 
         // Close our connections
-        ps.close();
         rs.close();
+        ps.close();
         con.close();
+
         return comments;
     }
 }
